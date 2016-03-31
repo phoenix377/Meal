@@ -48,6 +48,11 @@ User.find({}).remove()
       password: 'test'
     }, {
       provider: 'local',
+      name: 'Test Manager',
+      email: 'manager@example.com',
+      password: 'manager'
+    }, {
+      provider: 'local',
       role: 'admin',
       name: 'Admin',
       email: 'admin@example.com',

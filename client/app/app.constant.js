@@ -3,7 +3,7 @@
 
 angular.module('testProjectApp.constants', [])
 
-.constant('appConfig', {userRoles:['guest','user','admin']})
+.constant('appConfig', {userRoles:['user','manager','admin']})
 
 ;
 })(angular);

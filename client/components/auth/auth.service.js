@@ -169,6 +169,18 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
       return Auth.hasRole
         .apply(Auth, [].concat.apply(['admin'], arguments));
     },
+    
+    /**
+     * Check if a user is a manager
+     *   (synchronous|asynchronous)
+     * 
+     * @param   {Function|*} callback - optional, function(is)
+     * @return  {Bool|Promise}
+     */
+    isManager() {
+        return Auth.hasRole
+         .apply(Auth, [].concat.apply(['manager'], arguments));
+    },
 
     /**
      * Get auth token
