@@ -74,6 +74,13 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+// Gets a user's meals
+export function showusers(req, res) {
+    return Meal.find({userid: req.params.userid}).exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 // Creates a new Meal in the DB
 export function create(req, res) {
   return Meal.create(req.body)

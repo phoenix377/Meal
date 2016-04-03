@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
 import compose from 'composable-middleware';
 import User from '../api/user/user.model';
+import Meal from '../api/meal/meal.model';
 
 var validateJwt = expressJwt({
   secret: config.secrets.session
@@ -56,6 +57,38 @@ export function hasRole(roleRequired) {
         next();
       } else {
         res.status(403).send('Forbidden');
+      }
+    });
+}
+
+/**
+ * Checks if the user is owner of the meal
+ */
+export function isOwner() {
+  return compose()
+    .use(isAuthenticated())
+    .use(function(req, res, next) {
+      if(req.user.role !== config.userRoles[2]) {
+        var mealId = req.params.id;
+        if(!mealId) {
+          throw new Error('Required meal needs to be set');
+        }
+        
+        Meal.findById(mealId).exec()
+          .then((meal) => {
+              if(!meal) {
+                  return res.status(404).end();
+              }
+              
+              if(!meal.authenticate(req.user._id)) {
+                  return res.status(401).end();
+              };
+              next();
+          })
+          .catch((err) => {next(err)});
+      }
+      else {
+          next();
       }
     });
 }

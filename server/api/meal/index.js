@@ -1,15 +1,16 @@
 'use strict';
 
-var express = require('express');
-var controller = require('./meal.controller');
+import {Router} from 'express';
+import * as controller from './meal.controller';
+import * as auth from '../../auth/auth.service';
 
-var router = express.Router();
+var router = new Router();
 
-router.get('/', controller.index);
-router.get('/:id', controller.show);
-router.post('/', controller.create);
-router.put('/:id', controller.update);
-router.patch('/:id', controller.update);
-router.delete('/:id', controller.destroy);
+router.get('/', auth.hasRole('admin'), controller.index);
+router.get('/user/:userid', auth.isAuthenticated(), controller.showusers);
+router.post('/', auth.isAuthenticated(), controller.create);
+router.get('/:id', auth.isOwner(), controller.show);
+router.put('/:id', auth.isOwner(), controller.update);
+router.delete('/:id', auth.isOwner(), controller.destroy);
 
 module.exports = router;

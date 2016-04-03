@@ -17,6 +17,9 @@ var authServiceStub = {
   },
   hasRole(role) {
     return 'authService.hasRole.' + role;
+  },
+  isAuthor() {
+      return 'authService.isAuthor';
   }
 };
 

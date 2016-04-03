@@ -6,6 +6,7 @@
 'use strict';
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
+import Meal from '../api/meal/meal.model';
 
 Thing.find({}).remove()
   .then(() => {
@@ -41,7 +42,7 @@ Thing.find({}).remove()
 
 User.find({}).remove()
   .then(() => {
-    User.create({
+    User.create([{
       provider: 'local',
       name: 'Test User',
       email: 'test@example.com',
@@ -57,8 +58,19 @@ User.find({}).remove()
       name: 'Admin',
       email: 'admin@example.com',
       password: 'admin'
-    })
-    .then(() => {
-      console.log('finished populating users');
+    }])
+    .then((res) => {
+      Meal.find({}).remove()
+      .then(() => {
+        Meal.create({
+          name: 'Test Meal',
+          colories: 100,
+          date: new Date(),
+          userid: res[0]._id
+        })
+        .then(() => {
+          console.log('finished populating users');
+        });
+      });
     });
   });
