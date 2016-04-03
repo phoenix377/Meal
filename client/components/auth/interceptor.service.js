@@ -14,12 +14,15 @@ function authInterceptor($rootScope, $q, $cookies, $injector, Util) {
       return config;
     },
 
-    // Intercept 401s and redirect you to login
+    // Intercept 401s and 403s
     responseError(response) {
       if (response.status === 401) {
         (state || (state = $injector.get('$state'))).go('login');
         // remove any stale tokens
         $cookies.remove('token');
+      }
+      if(response.status === 403) {
+        alert('You do not have permission.');
       }
       return $q.reject(response);
     }

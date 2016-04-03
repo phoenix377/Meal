@@ -3,6 +3,8 @@
 angular.module('testProjectApp', [
   'testProjectApp.auth',
   'testProjectApp.admin',
+  'testProjectApp.users',
+  'testProjectApp.records',
   'testProjectApp.constants',
   'ngCookies',
   'ngResource',
