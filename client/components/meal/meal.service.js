@@ -12,6 +12,9 @@ function MealResource($resource) {
         id: 'user'
       },
       isArray: true
+    },
+    update: {
+      method:'PUT'
     }
   });
 }

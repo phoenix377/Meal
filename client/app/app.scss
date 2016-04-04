@@ -25,9 +25,8 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 		.user-info {
 			flex-grow: 1;
 		}
-		.trash {
-			display: flex;
-			align-items: center;
+		.trash, .edit {
+      margin-right: 10px;
 			text-decoration: none;
 		}
 	}

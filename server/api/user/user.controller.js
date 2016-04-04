@@ -12,10 +12,40 @@ function validationError(res, statusCode) {
   }
 }
 
+function handleEntityNotFound(res) {
+  return function(entity) {
+    if(!entity) {
+      res.status(404).end();
+      return null;
+    }
+    return entity;
+  }
+}
+
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
     res.status(statusCode).send(err);
+  };
+}
+
+function respondWithResult(res, statusCode) {
+  statusCode = statusCode || 200;
+  return function(entity) {
+    if(entity) {
+      res.status(statusCode).json(entity);
+    }
+  }
+}
+
+function saveUpdate(updates) {
+  return function(entity) {
+    entity.name = updates.name;
+    entity.email = updates.email;
+    return entity.save()
+      .then(updated => {
+        return updated;
+      });
   };
 }
 
@@ -62,6 +92,22 @@ export function show(req, res, next) {
       res.json(user.profile);
     })
     .catch(err => next(err));
+}
+
+/**
+ * Update a user
+ * restriction: 'admin'
+ */
+export function update(req, res) {
+  if(req.body._id) {
+    delete req.body._id;
+  }
+
+  return User.findOne({_id: req.params.id}, '-salt -password').exec()
+    .then(handleEntityNotFound(res))
+    .then(saveUpdate(req.body))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
 }
 
 /**

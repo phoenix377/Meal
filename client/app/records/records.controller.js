@@ -28,13 +28,7 @@ class RecordController {
       calories: 100,
       date: new Date()
     }, function(data) {
-      recordCtrl.records.push({
-        name: data.name,
-        calories: data.calories,
-        date: data.date,
-        _id: data._id,
-        _v: data._v
-      });
+      recordCtrl.records.push(data);
     }, function(err) {
       return safeCb(callback)(err);
     });

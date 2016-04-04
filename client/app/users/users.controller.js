@@ -12,6 +12,17 @@ class UserController {
       user.$remove();
       this.users.splice(this.users.indexOf(user), 1);
     });
+    // Edit user information
+    this.edit = Modal.confirm.updateUser(user => {
+      user.$update();
+      for(var index = 0; index < this.users.length; index++) {
+        if(this.users[index]._id === user._id) {
+          this.users[index].name = user.name;
+          this.users[index].email = user.email;
+          break;
+        }
+      }
+    });
   }
     
   add() {

@@ -1,22 +1,27 @@
 'use strict';
 
 angular.module('testProjectApp')
-  .factory('Modal', function($rootScope, $uibModal) {
+  .factory('Modal', function($rootScope, $uibModal, $sce) {
     /**
      * Opens a modal
      * @param  {Object} scope      - an object to be merged with modal's scope
      * @param  {String} modalClass - (optional) class(es) to be applied to the modal
      * @return {Object}            - the instance $uibModal.open() returns
      */
-    function openModal(scope = {}, modalClass = 'modal-default') {
+    function openModal(scope = {}, modalClass = 'modal-default', modalDialog = 'modal.html') {
       var modalScope = $rootScope.$new();
 
       angular.extend(modalScope, scope);
 
       return $uibModal.open({
-        templateUrl: 'components/modal/modal.html',
+        templateUrl: 'components/modal/' + modalDialog,
         windowClass: modalClass,
-        scope: modalScope
+        scope: modalScope,
+        resolve: {
+          param: function() {
+            return {'info': modalScope.info}
+          }
+        }
       });
     }
 
@@ -41,7 +46,7 @@ angular.module('testProjectApp')
             var args = Array.prototype.slice.call(arguments),
                 name = args.shift(),
                 deleteModal;
-
+ 
             deleteModal = openModal({
               modal: {
                 dismissable: true,
@@ -65,6 +70,55 @@ angular.module('testProjectApp')
 
             deleteModal.result.then(function(event) {
               del.apply(event, args);
+            });
+          };
+        },
+        
+        /**
+         * Create a fnction to open a update user modal (ex. ng-click='myModalFn(name, arg1, arg2...)')
+         * @param {String}  update  - callback, ran when update is confirmed
+         * @return {Function}       - the function to open the modal (ex. myModalFn)  
+         */
+        updateUser(update = angular.noop) {
+          /**
+           * Open a update user modal
+           * @param   {String}  name  - user name to show on modal
+           * @param   {All}           - any additional args are passed straight to update callback
+           */
+          return function() {
+            var args = Array.prototype.slice.call(arguments),
+              updateModal;
+                        
+            var scope = {
+                dismissable: true,
+                title: 'Update info',
+                name: args[0]['name'],
+                email: args[0]['email'],
+                buttons: [{
+                  classes: 'btn-primary',
+                  text: 'Update',
+                  click: function(e) {
+                    updateModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-default',
+                  text: 'Cancel',
+                  click: function(e) {
+                    updateModal.dismiss(e);
+                  }
+                }]
+              };
+            
+            updateModal = openModal({
+              modal: scope
+            }, 'modal-default', 'modal-user.html');
+            
+            updateModal.result.then(function(event) {
+              if(scope.name !== args[0]['name'] || scope.email !== args[0]['email']) {
+                args[0]['name'] = scope.name;
+                args[0]['email'] = scope.email;
+                update.apply(event, args);
+              }
             });
           };
         }
