@@ -1,12 +1,15 @@
 <div class="container">
-  <p>The delete user and user index api routes are restricted to users with the 'admin' role.</p>
-  <ul class="list-group user-list">
+  <p>Only users with the 'admin' role and 'manager' role can add or remove user</p>
+  <div class="col-xs-12 text-right">
+    <a ng-click="users.add('test2@example.com', 'test', 'password')" class="plus"><span class="fa fa-plus"> <strong>Add User</strong></span></a>
+  </div>
+  <ul class="list-group user-list col-xs-12">
     <li class="list-group-item" ng-repeat="user in users.users">
 	    <div class="user-info">
 	        <strong>{{user.name}}</strong><br>
 	        <span class="text-muted">{{user.email}}</span>
 	    </div>
-        <a ng-click="admin.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
+        <a ng-click="users.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
     </li>
   </ul>
 </div>
