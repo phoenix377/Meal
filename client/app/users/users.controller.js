@@ -14,13 +14,13 @@ class UserController {
     this.users.splice(this.users.indexOf(user), 1);
   }
   
-  add(email, name, password) {
+  add() {
     var userCtrl = this;
     this.submitted = true;
     this.User.save({
-      name: name,
-      email: email,
-      password: password
+      name: 'Test',
+      email: 'test@example.com',
+      password: 'test'
     },function(data) {
       userCtrl.users = userCtrl.User.query();
     }, function(err) {
