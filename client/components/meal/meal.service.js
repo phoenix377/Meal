@@ -3,28 +3,16 @@
 (function() {
 
 function MealResource($resource) {
-  return $resource('/api/meals/:id/:controller', {
+  return $resource('/api/meals/:id', {
     id: '@_id'
   }, {
     getUserRecords: {
       method: 'GET',
       params: {
-        id: 'user',
-        controller: 'userid'
-      }
+        id: 'user'
+      },
+      isArray: true
     }
-    // changePassword: {
-    //   method: 'PUT',
-    //   params: {
-    //     controller: 'password'
-    //   }
-    // },
-    // get: {
-    //   method: 'GET',
-    //   params: {
-    //     id: 'me'
-    //   }
-    // }
   });
 }
 

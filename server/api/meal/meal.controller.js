@@ -76,7 +76,7 @@ export function show(req, res) {
 
 // Gets a user's meals
 export function showusers(req, res) {
-    return Meal.find({userid: req.params.userid}).exec()
+    return Meal.find({userid: req.user._id}).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

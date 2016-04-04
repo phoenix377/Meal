@@ -44,8 +44,13 @@ User.find({}).remove()
   .then(() => {
     User.create([{
       provider: 'local',
-      name: 'Test User',
-      email: 'test@example.com',
+      name: 'Test User1',
+      email: 'test1@example.com',
+      password: 'test'
+    }, {
+      provider: 'local',
+      name: 'Test User2',
+      email: 'test2@example.com',
       password: 'test'
     }, {
       provider: 'local',
@@ -62,12 +67,17 @@ User.find({}).remove()
     .then((res) => {
       Meal.find({}).remove()
       .then(() => {
-        Meal.create({
-          name: 'Test Meal',
-          colories: 100,
+        Meal.create([{
+          name: 'Test Meal1',
+          calories: 100,
           date: new Date(),
           userid: res[0]._id
-        })
+        }, {
+          name: 'Test Meal2',
+          calories: 100,
+          date: new Date(),
+          userid: res[1]._id
+        }])
         .then(() => {
           console.log('finished populating users');
         });

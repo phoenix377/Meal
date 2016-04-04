@@ -15,14 +15,14 @@ class UserController {
   }
   
   add(email, name, password) {
-    var thisCtrl = this;
+    var userCtrl = this;
     this.submitted = true;
     this.User.save({
       name: name,
       email: email,
       password: password
     },function(data) {
-      thisCtrl.users = thisCtrl.User.query();
+      userCtrl.users = userCtrl.User.query();
     }, function(err) {
       return safeCb(callback)(err);
     });

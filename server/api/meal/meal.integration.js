@@ -102,10 +102,10 @@ describe('Meal API:', function() {
     });
   });
   
-  describe('GET /api/meals/user/:userid', function() {
+  describe('GET /api/meals/user', function() {
     it('should respond with list of meals of user', function(done) {
       request(app)
-        .get('/api/meals/user/' + users[0]._id)
+        .get('/api/meals/user')
         .set('authorization', 'Bearer ' + token)
         .expect(200)
         .expect('Content-Type', /json/)
@@ -117,7 +117,7 @@ describe('Meal API:', function() {
     
     it('should respond with a 401 when not authenticated', function(done) {
       request(app)
-        .get('/api/meals/user/' + users[0]._id)
+        .get('/api/meals/user')
         .expect(401)
         .end(done);
     });

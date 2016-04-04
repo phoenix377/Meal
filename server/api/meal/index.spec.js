@@ -57,11 +57,11 @@ describe('Meal API Router:', function() {
 
   });
 
-  describe('GET /api/meals/user/:userid', function() {
+  describe('GET /api/meals/user/', function() {
      
      it('should be authenticated and route to meals.controller.showusers', function() {
          routerStub.get
-           .withArgs('/user/:userid', 'authService.isAuthenticated', 'mealCtrl.showusers')
+           .withArgs('/user', 'authService.isAuthenticated', 'mealCtrl.showusers')
            .should.have.been.calledOnce;
      });
 

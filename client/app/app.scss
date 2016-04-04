@@ -14,6 +14,27 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   padding: 0.2em 0;
 }
 
+.user-list, .meal-list {
+	li {
+		display: flex;
+		border: none;
+		border-bottom: 1px lightgray solid;
+		margin-bottom: 0;
+		&:last-child { border-bottom: none; }
+
+		.user-info {
+			flex-grow: 1;
+		}
+		.trash {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+		}
+	}
+}
+
+.trash { color:rgb(209, 91, 71); }
+
 // Component styles are injected through grunt
 /* inject:scss */
 @import 'admin/admin.scss';

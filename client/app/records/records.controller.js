@@ -3,14 +3,41 @@
 (function(){
 
 class RecordController {
-  constructor(Meal) {
+  constructor(Meal, Auth) {
+    this.Meal = Meal;
+    this.isAdmin = Auth.isAdmin;
     // Use the Record $resource to fetch all records
-    this.records = Meal.query();
+    if(this.isAdmin() === true) {
+      this.records = Meal.query();
+    }
+    else {
+      this.records = Meal.getUserRecords();
+    }
   }
   
   delete(record) {
     record.$remove();
     this.records.splice(this.records.indexOf(record), 1);
+  }
+  
+  add() {
+    var recordCtrl = this;
+    this.submitted = true;
+    this.Meal.save({
+      name: "Test",
+      calories: 100,
+      date: new Date()
+    }, function(data) {
+      recordCtrl.records.push({
+        name: data.name,
+        calories: data.calories,
+        date: data.date,
+        _id: data._id,
+        _v: data._v
+      });
+    }, function(err) {
+      return safeCb(callback)(err);
+    });
   }
 }
 
