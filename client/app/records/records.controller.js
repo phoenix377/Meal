@@ -3,7 +3,7 @@
 (function(){
 
 class RecordController {
-  constructor(Meal, Auth) {
+  constructor(Meal, Modal, Auth) {
     this.Meal = Meal;
     this.isAdmin = Auth.isAdmin;
     // Use the Record $resource to fetch all records
@@ -13,11 +13,11 @@ class RecordController {
     else {
       this.records = Meal.getUserRecords();
     }
-  }
-  
-  delete(record) {
-    record.$remove();
-    this.records.splice(this.records.indexOf(record), 1);
+    // Delete record function    
+    this.delete = Modal.confirm.delete(record => {
+      record.$remove();
+      this.records.splice(this.records.indexOf(record), 1);
+    });
   }
   
   add() {

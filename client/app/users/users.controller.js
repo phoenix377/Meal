@@ -3,17 +3,17 @@
 (function(){
 
 class UserController {
-  constructor(User) {
+  constructor(User, Modal) {
     this.User = User;
     // Use the User $resource to fetch all users
     this.users = User.query();
+    // Delete user function
+    this.delete = Modal.confirm.delete(user => {
+      user.$remove();
+      this.users.splice(this.users.indexOf(user), 1);
+    });
   }
-  
-  delete(user) {
-    user.$remove();
-    this.users.splice(this.users.indexOf(user), 1);
-  }
-  
+    
   add() {
     var userCtrl = this;
     this.submitted = true;
