@@ -3,14 +3,14 @@
 (function(){
 
 class RecordController {
-  constructor(User) {
-    // Use the Record $resource to fetch all users
-    this.users = User.query();
+  constructor(Meal) {
+    // Use the Record $resource to fetch all records
+    this.records = Meal.query();
   }
   
   delete(record) {
     record.$remove();
-    this.users.splice(this.users.indexOf(user), 1);
+    this.records.splice(this.records.indexOf(record), 1);
   }
 }
 

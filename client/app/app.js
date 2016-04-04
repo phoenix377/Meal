@@ -5,6 +5,7 @@ angular.module('testProjectApp', [
   'testProjectApp.admin',
   'testProjectApp.users',
   'testProjectApp.records',
+  'testProjectApp.meal',
   'testProjectApp.constants',
   'ngCookies',
   'ngResource',

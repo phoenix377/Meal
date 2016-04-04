@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('testProjectApp.records', [
-  'testProjectApp.auth',
+  'testProjectApp.meal',
   'ui.router'
 ])
