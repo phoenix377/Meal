@@ -91,7 +91,7 @@ angular.module('testProjectApp')
                         
             var scope = {
                 dismissable: true,
-                title: 'Update info',
+                title: 'Update user info',
                 name: args[0]['name'],
                 email: args[0]['email'],
                 buttons: [{
@@ -117,6 +117,57 @@ angular.module('testProjectApp')
               if(scope.name !== args[0]['name'] || scope.email !== args[0]['email']) {
                 args[0]['name'] = scope.name;
                 args[0]['email'] = scope.email;
+                update.apply(event, args);
+              }
+            });
+          };
+        },
+        /**
+         * Create a fnction to open a update record modal (ex. ng-click='myModalFn(name, arg1, arg2...)')
+         * @param {String}  update  - callback, ran when update is confirmed
+         * @return {Function}       - the function to open the modal (ex. myModalFn)  
+         */
+        updateRecord(update = angular.noop) {
+          /**
+           * Open a update user modal
+           * @param   {String}  name  - user name to show on modal
+           * @param   {All}           - any additional args are passed straight to update callback
+           */
+          return function() {
+            var args = Array.prototype.slice.call(arguments),
+              updateModal;
+                        
+            var scope = {
+                dismissable: true,
+                title: 'Update meal record',
+                name: args[0]['name'],
+                calories: args[0]['calories'],
+                date: new Date(args[0]['date']),
+                time: new Date(args[0]['date']),
+                buttons: [{
+                  classes: 'btn-primary',
+                  text: 'Update',
+                  click: function(e) {
+                    updateModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-default',
+                  text: 'Cancel',
+                  click: function(e) {
+                    updateModal.dismiss(e);
+                  }
+                }]
+              };
+            
+            updateModal = openModal({
+              modal: scope
+            }, 'modal-default', 'modal-record.html');
+            
+            updateModal.result.then(function(event) {
+              if(scope.name !== args[0]['name'] || scope.calories !== args[0]['calories'] || scope.date !== new Date(args[0]['date']) || scope.time !== new Date(args[0]['date'])) {
+                args[0]['name'] = scope.name;
+                args[0]['calories'] = scope.calories;
+                args[0]['date'] = scope.date.toDateString() + ' ' + scope.time.toTimeString();
                 update.apply(event, args);
               }
             });

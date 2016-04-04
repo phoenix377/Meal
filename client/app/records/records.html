@@ -3,9 +3,10 @@
     <li class="list-group-item list-header">
       <div class="col-md-12">
         <span class="col-md-3"><strong>Meal</strong></span>
-        <span class="col-md-3"><strong>Calories</strong></span>
+        <span class="col-md-2"><strong>Calories</strong></span>
         <span class="col-md-3"><strong>Date</strong></span>
-        <div class="col-md-3 list-button">
+        <span class="col-md-2"><strong>Time</strong></span>
+        <div class="col-md-2 list-button">
           <a ng-click="records.add()" class="plus">
             <span class="fa fa-plus"><strong>Add</strong></span>
           </a>
@@ -15,9 +16,11 @@
     <li class="list-group-item" ng-repeat="record in records.records">
       <div class="col-md-12">
         <span class="col-md-3">{{record.name}}</span>
-        <span class="col-md-3">{{record.calories}}</span>
-        <span class="col-md-3">{{record.date}}</span>
-        <span class="col-md-3 list-button">
+        <span class="col-md-2">{{record.calories}}</span>
+        <span class="col-md-3">{{records.getDate(record.date)}}</span>
+        <span class="col-md-2">{{records.getLocalTime(record.date)}}</span>
+        <span class="col-md-2 list-button">
+          <a ng-click="records.update(record)" class="edit"><span class="fa fa-pencil-square-o fa-2x"></span></a>
           <a ng-click="records.delete(record.name, record)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
         </span>
       </div>

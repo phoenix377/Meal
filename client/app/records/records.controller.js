@@ -13,11 +13,31 @@ class RecordController {
     else {
       this.records = Meal.getUserRecords();
     }
-    // Delete record function    
+    // Delete record
     this.delete = Modal.confirm.delete(record => {
       record.$remove();
       this.records.splice(this.records.indexOf(record), 1);
     });
+    // Update record
+    this.update = Modal.confirm.updateRecord(record => {
+      record.$update();
+      for(var index = 0; index < this.records.length; index++) {
+        if(this.records[index]._id === record._id) {
+          this.records[index].name = record.name;
+          this.records[index].calories = record.calories;
+          this.records[index].date = record.date;
+          break;
+        }
+      }
+    });
+  }
+  
+  getDate(dateTime) {
+    return new Date(dateTime).toDateString();
+  }
+  
+  getLocalTime(dateTime) {
+    return new Date(dateTime).toLocaleTimeString();
   }
   
   add() {
