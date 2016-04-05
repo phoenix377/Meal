@@ -1,4 +1,17 @@
 <div class="container">
+  <!-- filter -->
+  <div class="record-filter row">
+    <div class="col-md-10">
+      <div class="col-md-2 text-right"><span><strong>From</strong></span></div>
+      <div class="col-md-2"><input type="date" ng-model="records.fromDate" class="form-control"/></div>
+      <div class="col-md-2"><input type="time" ng-model="records.fromDate" class="form-control"/></div>
+      <div class="col-md-2 text-right"><span><strong>To</strong></span></div>
+      <div class="col-md-2"><input type="date" ng-model="records.toDate" class="form-control"/></div>
+      <div class="col-md-2"><input type="time" ng-model="records.toDate" class="form-control"/></div>
+    </div>
+  </div>
+  
+  <!-- list of meals -->
   <ul class="list-group meal-list">
     <li class="list-group-item list-header">
       <div class="col-md-12">
@@ -13,7 +26,7 @@
         </div>
       </div>
     </li>
-    <li class="list-group-item" ng-repeat="record in records.records">
+    <li class="list-group-item" ng-repeat="record in records.records" ng-if="records.checkFilter(record)">
       <div class="col-md-12">
         <span class="col-md-3">{{record.name}}</span>
         <span class="col-md-2">{{record.calories}}</span>

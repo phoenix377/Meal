@@ -7,6 +7,9 @@ class RecordController {
     this.Meal = Meal;
     this.isAdmin = Auth.isAdmin;
     this.newRecord = {name: 'New Meal', calories: 100, date: new Date().toISOString()};
+    this.toDate = new Date();
+    this.fromDate = new Date(new Date().getFullYear().toString() + '-01-01');
+     
     // Use the Record $resource to fetch all records
     if(this.isAdmin() === true) {
       this.records = Meal.query();
@@ -50,19 +53,15 @@ class RecordController {
     return new Date(dateTime).toLocaleTimeString();
   }
   
-  // add() {
-  //   var recordCtrl = this;
-  //   this.submitted = true;
-  //   this.Meal.save({
-  //     name: "Test",
-  //     calories: 100,
-  //     date: new Date()
-  //   }, function(data) {
-  //     recordCtrl.records.push(data);
-  //   }, function(err) {
-  //     return safeCb(callback)(err);
-  //   });
-  // }
+  checkFilter(record) {
+    var fromDate = new Date(this.fromDate);
+    var toDate = new Date(this.toDate);
+    var recordDate = new Date(record.date);
+    if(recordDate > fromDate && recordDate < toDate) {
+      return true;
+    }
+    return false;
+  }
 }
 
 angular.module('testProjectApp.records')
