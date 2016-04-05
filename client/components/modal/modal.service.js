@@ -96,15 +96,20 @@ angular.module('testProjectApp')
                 title: type === 'add' ? 'Add new user' : 'Update user info',
                 name: args[0]['name'],
                 email: args[0]['email'],
+                password: '',
                 buttons: [{
                   classes: 'btn-primary',
                   text: type === 'add' ? 'Add' : 'Update',
                   enable: 'modal.type != \'add\' || (modal.type === \'add\' && modal.password !== modal.confirmPassword)',
                   click: function(e) {
-                    if(type === 'add' && (scope.password != scope.confirmPassword)) {
-                      
+                    if(type === 'add' && ((scope.password != scope.confirmPassword))) {
+                      scope.message = 'password must to be match';
+                    }
+                    else if(type === 'add' && scope.password.length < 3) {
+                      scope.message = 'password must have at least 3 characters';
                     }
                     else {
+                      scope.message = '';
                       updateModal.close(e);
                     }                    
                   }

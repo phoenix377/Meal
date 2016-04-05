@@ -3,8 +3,9 @@
 (function(){
 
 class UserController {
-  constructor(User, Modal) {
+  constructor(User, Modal, Util) {
     this.User = User;
+    this.Util = Util;
     this.newUser = {name: 'Test User', email: 'test@example.com'};
     // Use the User $resource to fetch all users
     this.users = User.query();
@@ -12,6 +13,7 @@ class UserController {
     this.delete = Modal.confirm.delete(user => {
       user.$remove();
       this.users.splice(this.users.indexOf(user), 1);
+      this.Util.showSuccessMessage('User successfully removed');
     });
     // Update user information
     this.update = Modal.confirm.updateUser(user => {
@@ -23,31 +25,20 @@ class UserController {
           break;
         }
       }
+      this.Util.showSuccessMessage('User successfully updated');
     });
     // Add new user
     this.add = Modal.confirm.updateUser(user => {
       var userCtrl = this;
       this.User.save(user, function(data) {
         userCtrl.users = userCtrl.User.query();
+        userCtrl.Util.showSuccessMessage('User successfully added');
       }, function(err) {
-        return safeCb(callback)(err);
+        userCtrl.Util.showErrorMessage(err.data.message);
+        return userCtrl.Util.safeCb()(err);
       });
     });
   }
-    
-  // add() {
-  //   var userCtrl = this;
-  //   this.submitted = true;
-  //   this.User.save({
-  //     name: 'Test',
-  //     email: 'test@example.com',
-  //     password: 'test'
-  //   },function(data) {
-  //     userCtrl.users = userCtrl.User.query();
-  //   }, function(err) {
-  //     return safeCb(callback)(err);
-  //   });
-  // }
 }
 
 angular.module('testProjectApp.users')

@@ -21,6 +21,7 @@
       <div class="col-md-3">Confirm Password</div>
       <div class="col-md-9"><input type="password" ng-model="modal.confirmPassword" class="form-control" placeholder="retype your password"/></div>
     </div>
+    <p ng-if="modal.message.length > 0" class="col-md-12 text-center help-block">{{modal.message}}</p>
   </div>
 </div>
 <div class="modal-footer">

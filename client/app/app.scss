@@ -35,10 +35,13 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 
 .trash { color:rgb(209, 91, 71); }
 
+.notifications .notifications-container {
+  z-index: 9999;
+}
+
 // Component styles are injected through grunt
 /* inject:scss */
 @import 'account/settings/settings.scss';
-@import 'admin/admin.scss';
 @import 'main/main.scss';
 @import 'records/records.scss';
 @import 'users/users.scss';

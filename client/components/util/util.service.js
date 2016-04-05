@@ -5,7 +5,7 @@
 /**
  * The Util service is for thin, globally reusable, utility functions
  */
-function UtilService($window) {
+function UtilService($window, notifications) {
   var Util = {
     /**
      * Return a callback or noop function
@@ -53,6 +53,30 @@ function UtilService($window) {
           url.protocol === o.protocol;
       });
       return (origins.length >= 1);
+    },
+    
+    /**
+     * Show success notification
+     * @param   {String}    message   - message to show
+     */
+    showSuccessMessage(message) {
+      notifications.showSuccess({message: message});
+    },
+    
+    /**
+     * Show error notification
+     * @param   {String}    error   - message to show
+     */
+    showErrorMessage(error) {
+      notifications.showError({message: error});
+    },
+    
+    /**
+     * Show warning notification
+     * @param   {String}    warning   - message to show
+     */
+    showWarningMessage(warning) {
+      notifications.showWarning({message: warning});
     }
   };
 

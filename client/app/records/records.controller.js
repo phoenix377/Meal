@@ -3,8 +3,9 @@
 (function(){
 
 class RecordController {
-  constructor(Meal, Modal, Auth) {
+  constructor(Meal, Modal, Auth, Util) {
     this.Meal = Meal;
+    this.Util = Util;
     this.isAdmin = Auth.isAdmin;
     this.maxCalories = Auth.getCurrentUser().calorieslimit;
     this.newRecord = {name: 'New Meal', calories: 100, date: new Date().toISOString()};
@@ -21,6 +22,7 @@ class RecordController {
     // Delete record
     this.delete = Modal.confirm.delete(record => {
       record.$remove();
+      this.Util.showSuccessMessage('Record successfully deleted');
       this.records.splice(this.records.indexOf(record), 1);
     });
     // Update record
@@ -34,14 +36,20 @@ class RecordController {
           break;
         }
       }
+      this.Util.showSuccessMessage('Record successfully updated');
+    }, function(err) {
+      this.Util.showErrorMessage(err.data.message);
+      return this.Util.safeCb()(err);
     });
     // Add record
     this.add = Modal.confirm.updateRecord(record => {
       var recordCtrl = this;
       this.Meal.save(record, function(data) {
         recordCtrl.records.push(data);
+        recordCtrl.Util.showSuccessMessage('Record successfully added');
       }, function(err) {
-        return safeCb(callback)(err);
+        recordCtrl.Util.showErrorMessage(err.data.message);
+        return recordCtrl.Util.safeCb()(err);
       });
     });
   }
