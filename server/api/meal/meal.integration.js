@@ -190,7 +190,6 @@ describe('Meal API:', function() {
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
-          console.log(err);
           res.body.name.should.equal(meals[0].name);
           res.body.calories.should.equal(meals[0].calories);
           res.body.date.toString().should.equal(meals[0].date.toISOString());

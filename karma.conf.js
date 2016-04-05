@@ -26,7 +26,9 @@ module.exports = function(config) {
       // endbower
       'client/app/app.js',
       'client/{app,components}/**/*.module.js',
-      'client/{app,components}/**/*.js',
+      'client/{app,components}/**/*.controller.js',
+      'client/{app,components}/**/*.router.js',
+      'client/{app,components}/**/*.js',      
       'client/{app,components}/**/*.html'
     ],
 
