@@ -2,7 +2,6 @@
 
 angular.module('testProjectApp', [
   'testProjectApp.auth',
-  'testProjectApp.admin',
   'testProjectApp.users',
   'testProjectApp.records',
   'testProjectApp.meal',

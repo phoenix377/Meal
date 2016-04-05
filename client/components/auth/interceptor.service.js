@@ -21,9 +21,9 @@ function authInterceptor($rootScope, $q, $cookies, $injector, Util) {
         // remove any stale tokens
         $cookies.remove('token');
       }
-      if(response.status === 403) {
-        alert('You do not have permission.');
-      }
+      // if(response.status === 403) {
+      //   alert('You do not have permission.');
+      // }
       return $q.reject(response);
     }
   };
