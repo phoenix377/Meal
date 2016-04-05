@@ -87,18 +87,26 @@ angular.module('testProjectApp')
            */
           return function() {
             var args = Array.prototype.slice.call(arguments),
+              type = args.shift(),
               updateModal;
                         
             var scope = {
                 dismissable: true,
-                title: 'Update user info',
+                type: type,
+                title: type === 'add' ? 'Add new user' : 'Update user info',
                 name: args[0]['name'],
                 email: args[0]['email'],
                 buttons: [{
                   classes: 'btn-primary',
-                  text: 'Update',
+                  text: type === 'add' ? 'Add' : 'Update',
+                  enable: 'modal.type != \'add\' || (modal.type === \'add\' && modal.password !== modal.confirmPassword)',
                   click: function(e) {
-                    updateModal.close(e);
+                    if(type === 'add' && (scope.password != scope.confirmPassword)) {
+                      
+                    }
+                    else {
+                      updateModal.close(e);
+                    }                    
                   }
                 }, {
                   classes: 'btn-default',
@@ -111,12 +119,15 @@ angular.module('testProjectApp')
             
             updateModal = openModal({
               modal: scope
-            }, 'modal-default', 'modal-user.html');
+            }, 'modal-danger', 'modal-user.html');
             
             updateModal.result.then(function(event) {
-              if(scope.name !== args[0]['name'] || scope.email !== args[0]['email']) {
+              if(type === 'add' || (scope.name !== args[0]['name'] || scope.email !== args[0]['email'])) {
                 args[0]['name'] = scope.name;
                 args[0]['email'] = scope.email;
+                if(type === 'add') {
+                  args[0]['password'] = scope.password;
+                }
                 update.apply(event, args);
               }
             });
@@ -135,18 +146,19 @@ angular.module('testProjectApp')
            */
           return function() {
             var args = Array.prototype.slice.call(arguments),
+              type = args.shift(),
               updateModal;
-                        
+            console.log(args);
             var scope = {
                 dismissable: true,
-                title: 'Update meal record',
+                title: type === 'add' ? 'Add meal record' : 'Update meal record',
                 name: args[0]['name'],
                 calories: args[0]['calories'],
                 date: new Date(args[0]['date']),
                 time: new Date(args[0]['date']),
                 buttons: [{
                   classes: 'btn-primary',
-                  text: 'Update',
+                  text: type === 'add' ? 'Add' : 'Update',
                   click: function(e) {
                     updateModal.close(e);
                   }
@@ -161,7 +173,7 @@ angular.module('testProjectApp')
             
             updateModal = openModal({
               modal: scope
-            }, 'modal-default', 'modal-record.html');
+            }, 'modal-danger', 'modal-record.html');
             
             updateModal.result.then(function(event) {
               if(scope.name !== args[0]['name'] || scope.calories !== args[0]['calories'] || scope.date !== new Date(args[0]['date']) || scope.time !== new Date(args[0]['date'])) {

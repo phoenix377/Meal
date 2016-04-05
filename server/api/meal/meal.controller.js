@@ -83,6 +83,9 @@ export function showusers(req, res) {
 
 // Creates a new Meal in the DB
 export function create(req, res) {
+  if(!req.body.userid) {
+    req.body.userid = req.user._id;
+  }
   return Meal.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));

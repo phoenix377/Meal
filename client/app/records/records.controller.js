@@ -6,6 +6,7 @@ class RecordController {
   constructor(Meal, Modal, Auth) {
     this.Meal = Meal;
     this.isAdmin = Auth.isAdmin;
+    this.newRecord = {name: 'New Meal', calories: 100, date: new Date().toISOString()};
     // Use the Record $resource to fetch all records
     if(this.isAdmin() === true) {
       this.records = Meal.query();
@@ -30,6 +31,15 @@ class RecordController {
         }
       }
     });
+    // Add record
+    this.add = Modal.confirm.updateRecord(record => {
+      var recordCtrl = this;
+      this.Meal.save(record, function(data) {
+        recordCtrl.records.push(data);
+      }, function(err) {
+        return safeCb(callback)(err);
+      });
+    });
   }
   
   getDate(dateTime) {
@@ -40,19 +50,19 @@ class RecordController {
     return new Date(dateTime).toLocaleTimeString();
   }
   
-  add() {
-    var recordCtrl = this;
-    this.submitted = true;
-    this.Meal.save({
-      name: "Test",
-      calories: 100,
-      date: new Date()
-    }, function(data) {
-      recordCtrl.records.push(data);
-    }, function(err) {
-      return safeCb(callback)(err);
-    });
-  }
+  // add() {
+  //   var recordCtrl = this;
+  //   this.submitted = true;
+  //   this.Meal.save({
+  //     name: "Test",
+  //     calories: 100,
+  //     date: new Date()
+  //   }, function(data) {
+  //     recordCtrl.records.push(data);
+  //   }, function(err) {
+  //     return safeCb(callback)(err);
+  //   });
+  // }
 }
 
 angular.module('testProjectApp.records')

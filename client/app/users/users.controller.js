@@ -5,6 +5,7 @@
 class UserController {
   constructor(User, Modal) {
     this.User = User;
+    this.newUser = {name: 'Test User', email: 'test@example.com'};
     // Use the User $resource to fetch all users
     this.users = User.query();
     // Delete user function
@@ -23,21 +24,30 @@ class UserController {
         }
       }
     });
-  }
-    
-  add() {
-    var userCtrl = this;
-    this.submitted = true;
-    this.User.save({
-      name: 'Test',
-      email: 'test@example.com',
-      password: 'test'
-    },function(data) {
-      userCtrl.users = userCtrl.User.query();
-    }, function(err) {
-      return safeCb(callback)(err);
+    // Add new user
+    this.add = Modal.confirm.updateUser(user => {
+      var userCtrl = this;
+      this.User.save(user, function(data) {
+        userCtrl.users = userCtrl.User.query();
+      }, function(err) {
+        return safeCb(callback)(err);
+      });
     });
   }
+    
+  // add() {
+  //   var userCtrl = this;
+  //   this.submitted = true;
+  //   this.User.save({
+  //     name: 'Test',
+  //     email: 'test@example.com',
+  //     password: 'test'
+  //   },function(data) {
+  //     userCtrl.users = userCtrl.User.query();
+  //   }, function(err) {
+  //     return safeCb(callback)(err);
+  //   });
+  // }
 }
 
 angular.module('testProjectApp.users')

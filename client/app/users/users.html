@@ -5,7 +5,7 @@
         <span class="col-md-4"><strong>User Name</strong></span>
         <span class="col-md-4"><strong>User Email</strong></span>
         <div class="col-md-4 list-button">
-          <a ng-click="users.add()" class="plus">
+          <a ng-click="users.add('add', users.newUser)" class="plus">
             <span class="fa fa-plus"><strong>Add</strong></span>
           </a>
         </div>
@@ -16,7 +16,7 @@
         <span class="col-md-4">{{user.name}}</span>
         <span class="col-md-4">{{user.email}}</span>
         <span class="col-md-4">
-          <a ng-click="users.update(user)" class="edit"><span class="fa fa-pencil-square-o fa-2x"></span></a>
+          <a ng-click="users.update('update', user)" class="edit"><span class="fa fa-pencil-square-o fa-2x"></span></a>
           <a ng-click="users.delete(user.name, user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
         </span>
       </div>

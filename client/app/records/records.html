@@ -7,7 +7,7 @@
         <span class="col-md-3"><strong>Date</strong></span>
         <span class="col-md-2"><strong>Time</strong></span>
         <div class="col-md-2 list-button">
-          <a ng-click="records.add()" class="plus">
+          <a ng-click="records.add('add', records.newRecord)" class="plus">
             <span class="fa fa-plus"><strong>Add</strong></span>
           </a>
         </div>
@@ -20,7 +20,7 @@
         <span class="col-md-3">{{records.getDate(record.date)}}</span>
         <span class="col-md-2">{{records.getLocalTime(record.date)}}</span>
         <span class="col-md-2 list-button">
-          <a ng-click="records.update(record)" class="edit"><span class="fa fa-pencil-square-o fa-2x"></span></a>
+          <a ng-click="records.update('update', record)" class="edit"><span class="fa fa-pencil-square-o fa-2x"></span></a>
           <a ng-click="records.delete(record.name, record)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
         </span>
       </div>
