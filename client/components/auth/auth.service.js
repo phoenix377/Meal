@@ -70,6 +70,24 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
     },
 
     /**
+     * Update max calories
+     * 
+     * @param {number}    maxCalories
+     * @param {Function}  callback - optional, function(err, user)
+     * @return {Promise}
+     */
+    setMaxCalories(maxCalories, callback) {
+      return User.changeCaloriesLimit({id: currentUser._id}, {
+        calorieslimit: maxCalories
+      }, function() {
+        currentUser.calorieslimit = maxCalories;
+        return safeCb(callback)(null);
+      }, function(err) {
+        return safeCb(callback)(err);
+      }).$promise;
+    },
+
+    /**
      * Change password
      *
      * @param  {String}   oldPassword

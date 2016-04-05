@@ -1,5 +1,21 @@
-<div class="container">
-  <div class="row">
+<div class="container settings">
+  <!-- set maximum kalorie -->
+  <div class="col-md-6">
+    <div class="col-sm-12">
+      <h1>Max calories</h1>
+    </div>
+    <div class="col-sm-12">
+      <form class="form" name="form" ng-submit="vm.setUserLimit(vm.calorieslimit)" novalidate>
+        <div class="form-group">
+          <label>Set max calories per day</label>
+          <input type="number" name="calories" min="0" ng-model="vm.calorieslimit" class="form-control"/>
+        </div>
+      </form>
+      <button ng-click="vm.setUserLimit(vm.calorieslimit)" class="btn btn-lg btn-primary">Set</button>
+    </div>
+  </div>
+  <!-- password reset -->
+  <div class="col-md-6">
     <div class="col-sm-12">
       <h1>Change Password</h1>
     </div>

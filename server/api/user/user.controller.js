@@ -42,6 +42,7 @@ function saveUpdate(updates) {
   return function(entity) {
     entity.name = updates.name;
     entity.email = updates.email;
+    entity.calorieslimit = updates.calorieslimit;
     return entity.save()
       .then(updated => {
         return updated;
@@ -142,6 +143,23 @@ export function changePassword(req, res, next) {
       } else {
         return res.status(403).end();
       }
+    });
+}
+
+/**
+ * Change a users max calories
+ */
+export function changeCalories(req, res, next) {
+  var userId = req.user._id;
+  var calorieslimit = parseInt(req.body.calorieslimit);
+  return User.findById(userId).exec()
+    .then(user => {
+      user.calorieslimit = calorieslimit;
+      return user.save()
+        .then(() => {
+          res.status(204).end();
+        })
+        .catch(validationError(res));
     });
 }
 

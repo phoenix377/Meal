@@ -11,6 +11,10 @@ var UserSchema = new Schema({
     type: String,
     lowercase: true
   },
+  calorieslimit: {
+    type: Number,
+    default: 2700
+  },
   role: {
     type: String,
     default: 'user'
@@ -30,7 +34,8 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
-      'role': this.role
+      'role': this.role,
+      'calorieslimit': this.calorieslimit
     };
   });
 

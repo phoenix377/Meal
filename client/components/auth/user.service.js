@@ -12,6 +12,12 @@ function UserResource($resource) {
         controller: 'password'
       }
     },
+    changeCaloriesLimit: {
+      method: 'PUT',
+      params: {
+        controller: 'maxcalories'
+      }
+    },
     get: {
       method: 'GET',
       params: {

@@ -148,7 +148,7 @@ angular.module('testProjectApp')
             var args = Array.prototype.slice.call(arguments),
               type = args.shift(),
               updateModal;
-            console.log(args);
+              
             var scope = {
                 dismissable: true,
                 title: type === 'add' ? 'Add meal record' : 'Update meal record',

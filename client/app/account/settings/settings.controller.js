@@ -4,8 +4,18 @@ class SettingsController {
   constructor(Auth) {
     this.errors = {};
     this.submitted = false;
-
+    this.calorieslimit = Auth.getCurrentUser().calorieslimit;
     this.Auth = Auth;
+  }
+  
+  setUserLimit(value) {
+    this.Auth.setMaxCalories(value)
+      .then(() => {
+        
+      })
+      .catch(() => {
+        
+      });
   }
 
   changePassword(form) {
